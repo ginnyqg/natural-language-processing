@@ -74,15 +74,17 @@ aggregate(dat1$num_qns, by=list(dat1$author, dat1$num_qns), FUN=sum)
 # 12 MWS                   3     1
 
 
+# #plot number of texts with question marks per author
+# barplot(dat3$x, names = dat3$Group.1)
+
+# #show counts on bar plot
+# mtext(at = barplot(dat3$x, names = dat3$Group.1), text = dat3$x)
+
+
 
 
 #plot number of texts with question marks per author
-barplot(dat3$x, names = dat3$Group.1)
-
-
-
-
-
+ggplot(data = dat3, aes(x = Group.1, y = x)) + geom_bar(stat="identity", fill = 'steelblue') + geom_text(aes(label = x), vjust = - 1)
 
 
 
