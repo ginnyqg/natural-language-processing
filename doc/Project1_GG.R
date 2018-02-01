@@ -6,7 +6,7 @@
 setwd('/Users/qinqingao/Documents/GitHub/spring2018-project1-ginnyqg/data')
 
 getwd()
-[1] "/Users/qinqingao/Documents/GitHub/spring2018-project1-ginnyqg/data"
+#[1] "/Users/qinqingao/Documents/GitHub/spring2018-project1-ginnyqg/data"
 
 
 spooky <- read.csv('../data/spooky.csv', as.is = TRUE)
@@ -14,43 +14,52 @@ spooky <- read.csv('../data/spooky.csv', as.is = TRUE)
 head(spooky)
 
 dim(spooky)
-[1] 19579     3
+#[1] 19579     3
+
+#plot composition of number of texts from 3 authors
+mytable <- table(spooky$author)
+lbls <- paste(names(mytable), '\n', mytable, '\n', round(mytable/sum(mytable) * 100, 1), '%', sep = '')
+
+library(plotrix)
+pie3D(mytable, labels = lbls, explode = 0.05, labelcex = 0.8)
 
 
+#find # of question marks in texts
 library(stringr)
 
 str_count(spooky, '\\?')
-[1]    0 1098    0
+#[1]    0 1098    0
 
 
 #add a num_qns field (number of question marks) for each text
+library(dplyr)
 dat1 <- mutate(spooky, num_qns = str_count(spooky$text, '\\?'))
 
 
 #count of texts with question marks per author
 dat2 <- data.frame(dat1)
-> aggregate(dat1$num_qns, by=list(dat1$author), FUN=sum)
-  Group.1   x
-1     EAP 510
-2     HPL 169
-3     MWS 419
+dat3 <- aggregate(dat1$num_qns, by=list(dat1$author), FUN=sum)
+#   Group.1   x
+# 1     EAP 510
+# 2     HPL 169
+# 3     MWS 419
 
 
 #count of texts with question marks per author per number of question marks
 aggregate(dat1$num_qns, by=list(dat1$author, dat1$num_qns), FUN=sum)
-   Group.1 Group.2   x
-1      EAP       0   0
-2      HPL       0   0
-3      MWS       0   0
-4      EAP       1 423
-5      HPL       1 159
-6      MWS       1 384
-7      EAP       2  60
-8      HPL       2  10
-9      MWS       2  32
-10     EAP       3  15
-11     MWS       3   3
-12     EAP       4  12
+#    Group.1 Group.2   x
+# 1      EAP       0   0
+# 2      HPL       0   0
+# 3      MWS       0   0
+# 4      EAP       1 423
+# 5      HPL       1 159
+# 6      MWS       1 384
+# 7      EAP       2  60
+# 8      HPL       2  10
+# 9      MWS       2  32
+# 10     EAP       3  15
+# 11     MWS       3   3
+# 12     EAP       4  12
 
 
 
@@ -81,10 +90,27 @@ aggregate(dat1$num_qns, by=list(dat1$author, dat1$num_qns), FUN=sum)
 # mtext(at = barplot(dat3$x, names = dat3$Group.1), text = dat3$x)
 
 
-
-
 #plot number of texts with question marks per author
-ggplot(data = dat3, aes(x = Group.1, y = x)) + geom_bar(stat="identity", fill = 'steelblue') + geom_text(aes(label = x), vjust = - 1)
+library(ggplot2)
+
+ggplot(data = dat3, aes(x = Group.1, y = x)) + 
+	geom_bar(stat="identity", fill = 'steelblue') + 
+	geom_text(aes(label = x), vjust = - 1) +
+	labs(x = 'Author', y = 'Number of questions in texts') +
+	theme(panel.background = element_blank())
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
