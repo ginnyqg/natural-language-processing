@@ -9,7 +9,7 @@ Title: SPOOKY Data Analysis
 
 # Goal
 
-Goal of this project is to identy authors in [spooky](https://github.com/GU4243-ADS/spring2018-project1-ginnyqg/blob/master/data/spooky.csv) dataset. Data consists of excerpts of texts written by popular horror authors [Edgar Allan Poe (EAP)](https://en.wikipedia.org/wiki/Edgar_Allan_Poe), [HP Lovecraft (HPL)](https://en.wikipedia.org/wiki/H._P._Lovecraft), and [Mary Wollstonecraft Shelley (MWS)](https://en.wikipedia.org/wiki/Mary_Shelley).
+Goal of this project is to find characteristics of texts from 3 popular horror authors, identify similarities and differences in their texts in the [spooky](https://github.com/GU4243-ADS/spring2018-project1-ginnyqg/blob/master/data/spooky.csv) dataset. Data consists of excerpts of texts written by [Edgar Allan Poe (EAP)](https://en.wikipedia.org/wiki/Edgar_Allan_Poe), [HP Lovecraft (HPL)](https://en.wikipedia.org/wiki/H._P._Lovecraft), and [Mary Wollstonecraft Shelley (MWS)](https://en.wikipedia.org/wiki/Mary_Shelley).
 
 
 # Load packages and read the data
@@ -81,7 +81,7 @@ pie3D(mytable, labels = lbls, explode = 0.05, labelcex = 0.8)
 * Count number of question marks in texts for spooky  
 * Add a field `num_qns` for the counts  
 * Wrangle data to show counts for each author  
-* Plot a waffle chart to see comparison in use of questions in texts amongst 3 authors.
+* Plot a waffle chart to see comparison of use of questions in texts among 3 authors.
 
 
 ```{r}
