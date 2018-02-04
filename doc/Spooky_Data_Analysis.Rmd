@@ -45,7 +45,7 @@ spooky <- read.csv('../data/spooky.csv', as.is = TRUE)
 ```
 
 
-## Overview of the dataset
+# Overview of the dataset
 
 Take a look of first few rows and dimension of the dataset
 
@@ -71,8 +71,8 @@ pie3D(mytable, labels = lbls, explode = 0.05, labelcex = 0.8)
 
 
 
-## Writing Style
-# Do some authors use more questions in the texts than others?
+# Writing Style
+## Do some authors use more questions in the texts than others?
 
 
 * Count number of question marks in texts for spooky  
@@ -87,19 +87,21 @@ dat1 <- mutate(spooky, num_qns = str_count(spooky$text, '\\?'))
 dat2 <- data.frame(dat1)
 dat3 <- aggregate(dat1$num_qns, by = list(Author = dat1$author), FUN = sum)
 dat3
+
 waffle(c('EAP' = dat3[1, 2], 'HPL' = dat3[2, 2], 'MWS' = dat3[3, 2]), rows = 20, size = 0.5, title = 'Count of questions in texts for authors', xlab = '(1 square == 1 question)')
 ```
 
 
 
-## Sentiment analysis
-# Positive and negative emotional content comparison in authors' text
+# Sentiment analysis
+## Positive and negative emotional content comparison in authors' text
 
 Apply sentiment analysis using [bing lexicon](https://www.cs.uic.edu/~liub/FBS/sentiment-analysis.html)
 
 
 ```{r}
 get_sentiments("bing")
+
 tidy_text <- unnest_tokens(spooky, word, text)
 tidy_text_sentiment <- tidy_text %>% inner_join(get_sentiments('bing'))
 head(tidy_text_sentiment, 100)
@@ -110,7 +112,6 @@ dat4
 
 
 pyramid.plot(dat4[1,c(1:3)], dat4[2,c(1:3)], top.labels = NULL, show.values = TRUE, ndig = 0, main = 'Author by Sentiments', unit = c('Negative', 'Positive'), ppmar = c(4, 4, 4, 4), laxlab = FALSE, raxlab = FALSE)
-
 legend('topright', legend = c("EAP", "HPL", "MWS"), col = c("red", "green", "blue"), lty = 1, bty = 'n', lwd = 8, cex = 0.8, horiz=TRUE)
 ```
 
