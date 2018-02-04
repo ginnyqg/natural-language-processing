@@ -7,7 +7,12 @@ Output:
   html_document: default
 ---
 
+# Goal
 
+Goal of this project is to identy authors in `spooky` dataset. Data consists of excerpts of texts written by popular horror authors [Edgar Allan Poe](https://en.wikipedia.org/wiki/Edgar_Allan_Poe), [HP Lovecraft](https://en.wikipedia.org/wiki/H._P._Lovecraft), and [Mary Wollstonecraft Shelley](https://en.wikipedia.org/wiki/Mary_Shelley).
+
+
+# Load packages and read the data
 
 ## Setup the libraries if not already installed
 
