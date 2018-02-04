@@ -1,15 +1,15 @@
 ---
-Title: "SPOOKY Data Analysis"
-Author: "Ginny Gao"
-Date: "Feb 03, 2018"
+Author: Ginny Gao
+Date: Feb 03, 2018
 Output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
+Title: SPOOKY Data Analysis
 ---
 
 # Goal
 
-Goal of this project is to identy authors in [spooky](https://github.com/GU4243-ADS/spring2018-project1-ginnyqg/blob/master/data/spooky.csv) dataset. Data consists of excerpts of texts written by popular horror authors [Edgar Allan Poe](https://en.wikipedia.org/wiki/Edgar_Allan_Poe), [HP Lovecraft](https://en.wikipedia.org/wiki/H._P._Lovecraft), and [Mary Wollstonecraft Shelley](https://en.wikipedia.org/wiki/Mary_Shelley).
+Goal of this project is to identy authors in [spooky](https://github.com/GU4243-ADS/spring2018-project1-ginnyqg/blob/master/data/spooky.csv) dataset. Data consists of excerpts of texts written by popular horror authors [Edgar Allan Poe (EAP)](https://en.wikipedia.org/wiki/Edgar_Allan_Poe), [HP Lovecraft (HPL)](https://en.wikipedia.org/wiki/H._P._Lovecraft), and [Mary Wollstonecraft Shelley (MWS)](https://en.wikipedia.org/wiki/Mary_Shelley).
 
 
 # Load packages and read the data
@@ -55,7 +55,7 @@ spooky <- read.csv('../data/spooky.csv', as.is = TRUE)
 Take a look of first few rows and dimension of the dataset
 
 ```{r}
-head(spooky)
+head(spooky, 3)
 dim(spooky)
 ```
 
@@ -74,8 +74,6 @@ lbls <- paste(names(mytable), '\n', mytable, '\n', round(mytable/sum(mytable) * 
 pie3D(mytable, labels = lbls, explode = 0.05, labelcex = 0.8)
 ```
 
-
-
 # Writing Style
 ## Do some authors use more questions in the texts than others?
 
@@ -93,10 +91,8 @@ dat2 <- data.frame(dat1)
 dat3 <- aggregate(dat1$num_qns, by = list(Author = dat1$author), FUN = sum)
 dat3
 
-waffle(c('EAP' = dat3[1, 2], 'HPL' = dat3[2, 2], 'MWS' = dat3[3, 2]), rows = 20, size = 0.5, title = 'Count of questions in texts for authors', xlab = '(1 square == 1 question)')
+waffle(c('EAP' = dat3[1, 2], 'HPL' = dat3[2, 2], 'MWS' = dat3[3, 2]), rows = 20, size = 0.5, title = 'Count of Questions in Texts by Authors', xlab = '(1 square == 1 question)')
 ```
-
-
 
 # Sentiment analysis
 ## Positive and negative emotional content comparison in authors' text
@@ -109,7 +105,7 @@ get_sentiments("bing")
 
 tidy_text <- unnest_tokens(spooky, word, text)
 tidy_text_sentiment <- tidy_text %>% inner_join(get_sentiments('bing'))
-head(tidy_text_sentiment, 100)
+head(tidy_text_sentiment, 10)
 
 
 dat4 <- table(tidy_text_sentiment$sentiment, tidy_text_sentiment$author)
