@@ -1,10 +1,11 @@
 ---
-Title: "SPOOKY Data Analysis"
+Title: <center><h1>"SPOOKY Data Analysis"</h1></center>
 Author: "Ginny Gao"
 Date: "Feb 03, 2018"
 Output:
   pdf_document: default
   html_document: default
+fontsize: 12pt
 ---
 
 ## Setup the libraries if not already installed
@@ -36,7 +37,7 @@ library(waffle)
 
 
 ## Read in the data
-`spooky.csv` in `data` folder, and this Rmd inside `docs` folder.
+`spooky.csv` in `data` folder, and this Rmd inside `doc` folder.
 
 ```{r}
 spooky <- read.csv('../data/spooky.csv', as.is = TRUE)
@@ -66,12 +67,12 @@ pie3D(mytable, labels = lbls, explode = 0.05, labelcex = 0.8)
 ```
 
 
-## Do some authors use more questions in their writings than others?
+## Do some authors use more questions in the texts than others?
 
 
-Count number of question marks in texts for spooky
-Add a field `num_qns` for the counts
-Wrangle data to show counts for each author
+Count number of question marks in texts for spooky  
+Add a field `num_qns` for the counts  
+Wrangle data to show counts for each author  
 Plot a waffle chart to see comparison in use of questions in texts amongst 3 authors.
 
 
