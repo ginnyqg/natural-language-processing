@@ -33,7 +33,7 @@ Not suprisingly, EAP uses most number of questions in his texts, as EAP has more
 
 Pyramid chart displays positive and negative emotional content comparison in authors' text.
 
-![image](figs/Waffle_qns_in_texts.png)
+![image](figs/Pyramid_sentiment.png)
 
 This sentiment analysis uses [bing lexicon](https://www.cs.uic.edu/~liub/FBS/sentiment-analysis.html).
 
