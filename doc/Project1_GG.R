@@ -54,6 +54,9 @@ dat3
 # 2    HPL 169
 # 3    MWS 419
 
+library(waffle)
+waffle(c('EAP' = dat3[1, 2], 'HPL' = dat3[2, 2], 'MWS' = dat3[3, 2]), rows = 20, size = 0.5, title = 'Count of questions in texts for authors', xlab = '(1 square == 1 question)')
+
 
 #count of texts with question marks per author per number of question marks
 aggregate(dat1$num_qns, by=list(dat1$author, dat1$num_qns), FUN=sum)
