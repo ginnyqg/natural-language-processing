@@ -139,6 +139,56 @@ ggplot(data = dat3, mapping = aes(x = Author, y = x, fill = Author)) +
 
 
 
+#sentiment analysis
+
+#library(tidytext)
+
+tidy_text <- unnest_tokens(spooky, word, text)
+
+#spooky_sentiment_bing <- tidy_text %>% inner_join(get_sentiments('bing')) %>% count(word, sentiment) %>% spread(sentiment, n)
+#spooky_sentiment_bing
+
+
+#tidy_text %>% inner_join(get_sentiments('bing'))
+
+
+tidy_text_sentiment <- tidy_text %>% inner_join(get_sentiments('bing'))
+head(tidy_text_sentiment, 100)
+
+#table(tidy_text_sentiment$author, tidy_text_sentiment$sentiment)
+     
+  #     negative positive
+  # EAP     7203     6144
+  # HPL     7605     3731
+  # MWS     8150     6799
+
+
+
+dat4 <- table(tidy_text_sentiment$sentiment, tidy_text_sentiment$author)
+dat4
+
+          
+  #           EAP  HPL  MWS
+  # negative 7203 7605 8150
+  # positive 6144 3731 6799
+
+
+pyramid.plot(dat4[1,c(1:3)], dat4[2,c(1:3)], top.labels = NULL, show.values = TRUE, ndig = 0, main = 'Author by Sentiments', unit = c('Negative', 'Positive'), ppmar = c(4, 4, 4, 4), laxlab = FALSE, raxlab = FALSE)
+
+legend('topright', legend = c("EAP", "HPL", "MWS"), col = c("red", "green", "blue"), lty = 1, bty = 'n', lwd = 8, cex = 0.8, horiz=TRUE)
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
