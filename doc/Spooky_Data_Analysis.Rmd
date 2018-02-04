@@ -1,12 +1,16 @@
 ---
-Title: <center><h1>"SPOOKY Data Analysis"</h1></center>
+Title: <center> <h1>"SPOOKY Data Analysis"</h1> </center>
 Author: "Ginny Gao"
 Date: "Feb 03, 2018"
 Output:
   pdf_document: default
   html_document: default
-fontsize: 12pt
 ---
+
+<style>
+	font-size: 12pt;
+</style>
+
 
 ## Setup the libraries if not already installed
 
