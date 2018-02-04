@@ -1,0 +1,96 @@
+---
+Title: "SPOOKY Data Analysis"
+Author: "Ginny Gao"
+Date: "Feb 03, 2018"
+Output:
+  pdf_document: default
+  html_document: default
+---
+
+## Setup the libraries if not already installed
+
+
+```{r, message = F, warning = F}
+packages.used <- c("ggplot2", "plotrix", "waffle", "dplyr", "tibble", "tidyr",  "stringr", "tidytext", "topicmodels", "wordcloud")
+
+# check packages that need to be installed.
+packages.needed <- setdiff(packages.used, intersect(installed.packages()[,1], packages.used))
+
+# install additional packages
+if(length(packages.needed) > 0) {
+  install.packages(packages.needed, dependencies = TRUE, repos = 'http://cran.us.r-project.org')
+}
+
+
+library(ggplot2)
+library(dplyr)
+library(tibble)
+library(tidyr)
+library(stringr)
+library(tidytext)
+library(topicmodels)
+library(wordcloud)
+library(plotrix)
+library(waffle)
+```
+
+
+## Read in the data
+`spooky.csv` in `data` folder, and this Rmd inside `docs` folder.
+
+```{r}
+spooky <- read.csv('../data/spooky.csv', as.is = TRUE)
+```
+
+
+## Overview of the dataset
+
+```{r}
+head(spooky)
+dim(spooky)
+```
+
+How many texts do each author have in the dataset?
+
+```{r}
+mytable <- table(spooky$author)
+mytable
+```
+
+Plot composition of number of texts from 3 authors in pie chart, display counts and percentages
+
+
+```{r}
+lbls <- paste(names(mytable), '\n', mytable, '\n', round(mytable/sum(mytable) * 100, 1), '%', sep = '')
+pie3D(mytable, labels = lbls, explode = 0.05, labelcex = 0.8)
+```
+
+
+## Do some authors use more questions in their writings than others?
+
+
+Count number of question marks in texts for spooky
+Add a field `num_qns` for the counts
+Wrangle data to show counts for each author
+Plot a waffle chart to see comparison in use of questions in texts amongst 3 authors.
+
+
+```{r}
+str_count(spooky, '\\?')
+dat1 <- mutate(spooky, num_qns = str_count(spooky$text, '\\?'))
+dat2 <- data.frame(dat1)
+dat3 <- aggregate(dat1$num_qns, by = list(Author = dat1$author), FUN=sum)
+dat3
+waffle(c('EAP' = dat3[1, 2], 'HPL' = dat3[2, 2], 'MWS' = dat3[3, 2]), rows = 20, size = 0.5, title = 'Count of questions in texts for authors', xlab = '(1 square == 1 question)')
+```
+
+
+
+
+
+
+
+
+
+
+

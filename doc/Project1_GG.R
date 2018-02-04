@@ -3,6 +3,30 @@
 #Ginny Gao
 
 
+packages.used <- c("ggplot2", "plotrix", "waffle", "dplyr", "tibble", "tidyr",  "stringr", "tidytext", "topicmodels", "wordcloud")
+
+# check packages that need to be installed.
+packages.needed <- setdiff(packages.used, intersect(installed.packages()[,1], packages.used))
+
+# install additional packages
+if(length(packages.needed) > 0) {
+  install.packages(packages.needed, dependencies = TRUE, repos = 'http://cran.us.r-project.org')
+}
+
+
+library(ggplot2)
+library(dplyr)
+library(tibble)
+library(tidyr)
+library(stringr)
+library(tidytext)
+library(topicmodels)
+library(wordcloud)
+library(plotrix)
+library(waffle)
+
+
+
 setwd('/Users/qinqingao/Documents/GitHub/spring2018-project1-ginnyqg/data')
 
 getwd()
@@ -27,19 +51,19 @@ mytable
 
 lbls <- paste(names(mytable), '\n', mytable, '\n', round(mytable/sum(mytable) * 100, 1), '%', sep = '')
 
-library(plotrix)
+#library(plotrix)
 pie3D(mytable, labels = lbls, explode = 0.05, labelcex = 0.8)
 
 
 #find # of question marks in texts
-library(stringr)
+#library(stringr)
 
 str_count(spooky, '\\?')
 #[1]    0 1098    0
 
 
 #add a num_qns field (number of question marks) for each text
-library(dplyr)
+#library(dplyr)
 dat1 <- mutate(spooky, num_qns = str_count(spooky$text, '\\?'))
 
 
@@ -54,7 +78,7 @@ dat3
 # 2    HPL 169
 # 3    MWS 419
 
-library(waffle)
+#library(waffle)
 waffle(c('EAP' = dat3[1, 2], 'HPL' = dat3[2, 2], 'MWS' = dat3[3, 2]), rows = 20, size = 0.5, title = 'Count of questions in texts for authors', xlab = '(1 square == 1 question)')
 
 
@@ -104,7 +128,7 @@ aggregate(dat1$num_qns, by=list(dat1$author, dat1$num_qns), FUN=sum)
 
 
 #plot number of texts with question marks per author
-library(ggplot2)
+#library(ggplot2)
 
 
 ggplot(data = dat3, mapping = aes(x = Author, y = x, fill = Author)) + 
