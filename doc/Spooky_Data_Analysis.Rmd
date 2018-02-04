@@ -1,5 +1,5 @@
 ---
-Title: <center> <h1>"SPOOKY Data Analysis"</h1> </center>
+Title: "SPOOKY Data Analysis"
 Author: "Ginny Gao"
 Date: "Feb 03, 2018"
 Output:
@@ -7,9 +7,6 @@ Output:
   html_document: default
 ---
 
-<style>
-	font-size: 12pt;
-</style>
 
 
 ## Setup the libraries if not already installed
@@ -50,6 +47,8 @@ spooky <- read.csv('../data/spooky.csv', as.is = TRUE)
 
 ## Overview of the dataset
 
+Take a look of first few rows and dimension of the dataset
+
 ```{r}
 head(spooky)
 dim(spooky)
@@ -74,17 +73,17 @@ pie3D(mytable, labels = lbls, explode = 0.05, labelcex = 0.8)
 ## Do some authors use more questions in the texts than others?
 
 
-Count number of question marks in texts for spooky  
-Add a field `num_qns` for the counts  
-Wrangle data to show counts for each author  
-Plot a waffle chart to see comparison in use of questions in texts amongst 3 authors.
+* Count number of question marks in texts for spooky  
+* Add a field `num_qns` for the counts  
+* Wrangle data to show counts for each author  
+* Plot a waffle chart to see comparison in use of questions in texts amongst 3 authors.
 
 
 ```{r}
 str_count(spooky, '\\?')
 dat1 <- mutate(spooky, num_qns = str_count(spooky$text, '\\?'))
 dat2 <- data.frame(dat1)
-dat3 <- aggregate(dat1$num_qns, by = list(Author = dat1$author), FUN=sum)
+dat3 <- aggregate(dat1$num_qns, by = list(Author = dat1$author), FUN = sum)
 dat3
 waffle(c('EAP' = dat3[1, 2], 'HPL' = dat3[2, 2], 'MWS' = dat3[3, 2]), rows = 20, size = 0.5, title = 'Count of questions in texts for authors', xlab = '(1 square == 1 question)')
 ```
