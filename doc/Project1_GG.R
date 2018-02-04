@@ -18,6 +18,13 @@ dim(spooky)
 
 #plot composition of number of texts from 3 authors
 mytable <- table(spooky$author)
+
+mytable
+
+#  EAP  HPL  MWS 
+# 7900 5635 6044
+
+
 lbls <- paste(names(mytable), '\n', mytable, '\n', round(mytable/sum(mytable) * 100, 1), '%', sep = '')
 
 library(plotrix)
@@ -38,11 +45,14 @@ dat1 <- mutate(spooky, num_qns = str_count(spooky$text, '\\?'))
 
 #count of texts with question marks per author
 dat2 <- data.frame(dat1)
-dat3 <- aggregate(dat1$num_qns, by=list(dat1$author), FUN=sum)
-#   Group.1   x
-# 1     EAP 510
-# 2     HPL 169
-# 3     MWS 419
+
+dat3 <- aggregate(dat1$num_qns, by = list(Author = dat1$author), FUN=sum)
+dat3
+
+#   Author   x
+# 1    EAP 510
+# 2    HPL 169
+# 3    MWS 419
 
 
 #count of texts with question marks per author per number of question marks
@@ -93,15 +103,12 @@ aggregate(dat1$num_qns, by=list(dat1$author, dat1$num_qns), FUN=sum)
 #plot number of texts with question marks per author
 library(ggplot2)
 
-ggplot(data = dat3, aes(x = Group.1, y = x)) + 
-	geom_bar(stat="identity", fill = 'steelblue') + 
-	geom_text(aes(label = x), vjust = - 1) +
-	labs(x = 'Author', y = 'Number of questions in texts') +
-	theme(panel.background = element_blank())
 
-
-
-
+ggplot(data = dat3, mapping = aes(x = Author, y = x, fill = Author)) + 
+    geom_bar(stat="identity") + 
+    geom_text(aes(label = x), vjust = - 1) +
+    labs(x = 'Author', y = 'Number of questions in texts') +
+    theme(panel.background = element_blank())
 
 
 
