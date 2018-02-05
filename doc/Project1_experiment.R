@@ -3,7 +3,7 @@
 #Ginny Gao
 
 
-packages.used <- c("ggplot2", "plotrix", "waffle", "dplyr", "tibble", "tidyr",  "stringr", "tidytext", "topicmodels", "wordcloud", "plotly", "webshot", "htmlwidgets")
+packages.used <- c("ggplot2", "plotrix", "waffle", "dplyr", "tibble", "tidyr",  "stringr", "tidytext", "topicmodels", "wordcloud", "plotly", "webshot", "htmlwidgets", "reshape2")
 
 # check packages that need to be installed.
 packages.needed <- setdiff(packages.used, intersect(installed.packages()[,1], packages.used))
@@ -27,6 +27,7 @@ library(waffle)
 library(plotly)
 library(webshot)
 library(htmlwidgets)
+library(reshape2)
 
 
 setwd('/Users/qinqingao/Documents/GitHub/spring2018-project1-ginnyqg/data')
@@ -273,7 +274,7 @@ dat8
 # 3    MWS     916632     419     8150     6799
 
 
-
+#library(reshape2)
 new_num_texts <- melt(num_texts)
 
 colnames(new_num_texts) <- c('Author', 'num_text')

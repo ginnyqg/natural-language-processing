@@ -5,7 +5,9 @@ Output:
   pdf_document: default
   html_document: default
 Title: SPOOKY Data Analysis
-output: pdf_document
+output:
+  html_document: default
+  pdf_document: default
 ---
 
 # Goal
@@ -19,7 +21,7 @@ Goal of this project is to find characteristics of texts from 3 popular horror a
 
 
 ```{r, message = F, warning = F}
-packages.used <- c("ggplot2", "plotrix", "waffle", "dplyr", "tibble", "tidyr",  "stringr", "tidytext", "topicmodels", "wordcloud")
+packages.used <- c("ggplot2", "plotrix", "waffle", "dplyr", "tibble", "tidyr",  "stringr", "tidytext", "topicmodels", "wordcloud", "plotly", "webshot", "htmlwidgets", "reshape2")
 
 # check packages that need to be installed.
 packages.needed <- setdiff(packages.used, intersect(installed.packages()[,1], packages.used))
@@ -40,6 +42,10 @@ library(topicmodels)
 library(wordcloud)
 library(plotrix)
 library(waffle)
+library(plotly)
+library(webshot)
+library(htmlwidgets)
+library(reshape2)
 ```
 
 
@@ -63,16 +69,16 @@ dim(spooky)
 How many texts do each author have in the dataset?
 
 ```{r}
-mytable <- table(spooky$author)
-mytable
+num_texts <- table(spooky$author)
+num_texts
 ```
 
 Plot composition of number of texts from 3 authors in pie chart, display counts and percentages
 
 
 ```{r}
-lbls <- paste(names(mytable), '\n', mytable, '\n', round(mytable/sum(mytable) * 100, 1), '%', sep = '')
-pie3D(mytable, labels = lbls, explode = 0.05, labelcex = 0.8)
+lbls <- paste(names(num_texts), '\n', num_texts, '\n', round(num_texts/sum(num_texts) * 100, 1), '%', sep = '')
+pie3D(num_texts, labels = lbls, explode = 0.05, labelcex = 0.8)
 ```
 
 # Writing Style
@@ -116,6 +122,95 @@ pyramid.plot(dat3[1,c(1:3)], dat3[2,c(1:3)], top.labels = NULL, show.values = TR
 legend('topright', legend = c("EAP", "HPL", "MWS"), col = c("red", "green", "blue"), lty = 1, bty = 'n', lwd = 8, cex = 0.8, horiz=TRUE)
 ```
 
+
+* Aggregate number of negative and positive words used by each author
+* Plot a bubble chart to show sentiments and num_qns by authors
+
+```{r}
+dat4 <- as.data.frame.matrix(table(tidy_text_sentiment$author, tidy_text_sentiment$sentiment))
+dat4 <- setNames(cbind(rownames(dat4), dat4, row.names = NULL), c('Author', 'negative', 'positive'))
+dat4
+
+#rename column name
+colnames(dat2)[which(names(dat2) == 'x')] <- 'num_qns'
+dat2
+
+#join tables by author
+dat5 <- inner_join(dat2, dat4, by = 'Author')
+dat5
+
+#   Author num_qns negative positive
+# 1    EAP     510     7203     6144
+# 2    HPL     169     7605     3731
+# 3    MWS     419     8150     6799
+
+#plot bubble chart: Sentiments and Num of Questions per Author
+p <- plot_ly(dat5, x = ~positive, y = ~negative, size = ~num_qns, color = ~Author, 
+	type = 'scatter', mode = 'markers', marker = list(opacity = 0.5)) %>% 
+    layout(title = '<b>Sentiments and Num of Questions per Author</b>',
+    	   xaxis = list(title = '<b>Positive words</b>', showgrid = FALSE),
+    	   yaxis = list(title = '<b>Negative words</b>', showgrid = FALSE),
+    	   showlegend = FALSE) %>% 
+    add_annotations(
+            text = paste(dat5$Author, '\n', dat5$num_qns),
+            xref = "x",
+            yref = "y",
+            showarrow = TRUE,
+            arrowsize = 0.5,
+            ax = 40,
+            ay = -60)
+
+p
+
+#export(p, file = '/Users/qinqingao/Documents/GitHub/spring2018-project1-ginnyqg/figs/Bubble.png')
+```
+
+* With the same method, explore relationship between authors' use of questions in sentences and toward their total volume of texts.
+
+```{r}
+#sentence length
+spooky$sen_length <- str_length(spooky$text)
+
+dat6 <- mutate(spooky, sen_length = spooky$sen_length)
+dat7 <- aggregate(dat6$sen_length, by = list(Author = dat6$author), FUN = sum)
+
+#rename column name
+colnames(dat7)[which(names(dat7) == 'x')] <- 'sen_length'
+dat7
+
+#join tables by author
+dat8 <- inner_join(dat7, dat5, by = 'Author')
+dat8
+
+
+new_num_texts <- melt(num_texts)
+colnames(new_num_texts) <- c('Author', 'num_text')
+new_num_texts
+
+dat9 <- inner_join(new_num_texts, dat8, by = 'Author')
+dat9
+
+#plot bubble chart: Num of Texts, Questions, Sentence Length per Author
+p2 <- plot_ly(dat9, x = ~num_text, y = ~num_qns, size = ~sen_length, color = ~Author, 
+	type = 'scatter', mode = 'markers', marker = list(opacity = 0.5)) %>% 
+    layout(title = '<b>Num of Texts, Questions, Sentence Length per Author</b>',
+    	   xaxis = list(title = '<b>Num of Texts</b>', showgrid = FALSE),
+    	   yaxis = list(title = '<b>Num of Questions</b>', showgrid = FALSE),
+    	   showlegend = FALSE) %>% 
+    add_annotations(
+            text = paste(dat9$Author, '\n', prettyNum(dat9$sen_length, big.mark = ',', scientific = FALSE)),
+            xref = "x",
+            yref = "y",
+            showarrow = TRUE,
+            arrowsize = 0.5,
+            ax = 40,
+            ay = -60)
+
+
+p2
+
+#export(p2, file = '/Users/qinqingao/Documents/GitHub/spring2018-project1-ginnyqg/figs/Bubble_num_text_qns_sent.png')
+```
 
 
 
