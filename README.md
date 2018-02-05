@@ -43,7 +43,7 @@ You may interact with the chart [here](https://github.com/GU4243-ADS/spring2018-
 
 ## 2.3 How about bigrams in the text? What two words, less stop words appear together most often in the spooky dataset? 
 
-The network digram shows the relationship of these top bigrams.
+The network digram shows what are the top bigrams, and the relationship of these top bigrams with each other.
 
 ![image](figs/bigram_graph.png)
 
