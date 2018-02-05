@@ -1,5 +1,5 @@
 # Spring 2018
-# Project 1: Spooky Data Analysis :ghost:
+# Project 1: Spooky Data Analysis  :jack_o_lantern: :ghost:
 
 ## Project Description
 This is the first and only *individual* (as opposed to *team*) this semester. 
@@ -37,6 +37,8 @@ Bubble chart illustrates the similarities and differences in these quantities fo
 ![image](figs/Bubble_num_text_qns_sent.png)
 
 EAP writes most texts in the dataset, and he also has largest volume of words. Interestingly for MWS, though she doesn't have many texts or nearly as many words as EAP does in the dataset, she uses many questions in her texts. Based on the slopes of where the 3 bubbles are in the chart, MWS uses most questions in her texts compare to the other 2. HPL writes the least in the group, and his use of questions is about the same as EAP.
+
+You may interact with the chart [here](https://github.com/GU4243-ADS/spring2018-project1-ginnyqg/blob/master/doc/Spooky_Data_Analysis.html).
 
 
 ## 3. How do sentiments compare in these authors' writings?
