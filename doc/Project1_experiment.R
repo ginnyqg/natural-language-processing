@@ -364,18 +364,164 @@ export(p2, file = '/Users/qinqingao/Documents/GitHub/spring2018-project1-ginnyqg
 
 
 
+#n-gram
+
+#bigram in spooky
+spooky_bigrams <- spooky %>% unnest_tokens(bigram, text, token = 'ngrams', n = 2)
+
+head(spooky_bigrams, 10)
+
+spooky_bigrams %>% count(bigram, sort = TRUE)
+
+# # A tibble: 221,688 x 2
+#    bigram       n
+#    <chr>    <int>
+#  1 of the    5581
+#  2 in the    2743
+#  3 to the    1847
+#  4 and the   1343
+#  5 it was    1037
+#  6 from the  1036
+#  7 on the    1011
+#  8 of a       986
+#  9 i had      861
+# 10 of my      812
+# # ... with 221,678 more rows
+
+#not too interesting, with all the 'stop words'
+#separate them, and find more interesting bigrams
+bigrams_separated <- spooky_bigrams %>% 
+separate(bigram, c('word1', 'word2'), sep = ' ')
+
+
+#filter out the uninteresting stop words
+bigrams_filtered <- bigrams_separated %>%
+	filter(!word1 %in% stop_words$word) %>%
+	filter(!word2 %in% stop_words$word)
+
+
+#sort by most common bigrams
+bigram_counts <- bigrams_filtered %>%
+	count(word1, word2, sort = TRUE)
+
+
+head(bigram_counts)
+# # A tibble: 6 x 3
+#   word1  word2           n
+#   <chr>  <chr>       <int>
+# 1 lord   raymond        27
+# 2 fellow creatures      22
+# 3 ha     ha             22
+# 4 main   compartment    21
+# 5 madame lalande        20
+# 6 chess  player         18
+
+
+#unite the 2 words, filter out the stop words, count descendingly
+
+bigrams_united <- bigrams_filtered %>% 
+	unite(bigram, word1, word2, sep = ' ')
+
+bigrams_united_counts <- bigrams_united %>% 
+	count(bigram, sort = TRUE)
+
+head(bigrams_united_counts, 20)
+
+# # A tibble: 20 x 2
+#    bigram               n
+#    <chr>            <int>
+#  1 lord raymond        27
+#  2 fellow creatures    22
+#  3 ha ha               22
+#  4 main compartment    21
+#  5 madame lalande      20
+#  6 chess player        18
+#  7 short time          18
+#  8 heh heh             17
+#  9 blue eyes           16
+# 10 left arm            16
+# 11 shunned house       16
+# 12 native country      14
+# 13 tempest mountain    14
+# 14 brown jenkin        13
+# 15 herbert west        13
+# 16 tea pot             13
+# 17 ten thousand        13
+# 18 death's head        12
+# 19 human nature        12
+# 20 human race          12
+
+
+
+#if try trigrams
+spooky_trigrams <- spooky %>% unnest_tokens(trigram, text, token = 'ngrams', n = 3) %>% 
+	separate(trigram, c('word1', 'word2', 'word3'), sep = ' ') %>% 
+	filter(!word1 %in% stop_words$word, !word2 %in% stop_words$word, !word3 %in% stop_words$word) %>% 
+	count(word1, word2, word3, sort = TRUE)
+
+
+
+head(spooky_trigrams, 20)
+
+# # A tibble: 20 x 4
+#    word1     word2    word3        n
+#    <chr>     <chr>    <chr>    <int>
+#  1 ha        ha       ha          11
+#  2 barrière  du       roule       10
+#  3 heh       heh      heh          9
+#  4 charles   le       sorcier      8
+#  5 ugh       ugh      ugh          8
+#  6 mille     mille    mille        7
+#  7 rue       des      drômes       6
+#  8 arab      abdul    alhazred     4
+#  9 automaton chess    player       4
+# 10 de        lef      eye          4
+# 11 eric      moreland clapham      4
+# 12 horned    waning   moon         4
+# 13 hu        hu       hu           4
+# 14 mad       arab     abdul        4
+# 15 miss      bas      bleu         4
+# 16 monsieur  le       blanc        4
+# 17 moreland  clapham  lee          4
+# 18 signora   psyche   zenobia      4
+# 19 arch      duchess  ana          3
+# 20 bogs      hogs     logs         3
 
 
 
 
+#can find change of sentiments by negation using 'not', 'no'
+bigrams_separated %>% filter(word1 %in% c('not', 'no')) %>% count(word1, word2, sort = TRUE)
+
+# # A tibble: 1,621 x 3
+#    word1 word2      n
+#    <chr> <chr>  <int>
+#  1 not   to       139
+#  2 not   be       131
+#  3 no    longer   113
+#  4 no    more     107
+#  5 not   the      103
+#  6 no    one       88
+#  7 not   a         88
+#  8 not   have      72
+#  9 not   only      66
+# 10 no    doubt     60
+# # ... with 1,611 more rows
 
 
+library(igraph)
+bigram_counts
+bigram_graph <- bigram_counts %>% filter(n > 15) %>% graph_from_data_frame()
+bigram_graph
 
 
+library(ggraph)
+set.seed(2018)
 
-
-
-
+ggraph(bigram_graph, layout = "fr") +
+   geom_edge_link() +
+   geom_node_point(color = "lightblue", size = 5) +
+   geom_node_text(aes(label = name), vjust = 1, hjust = 1)
 
 
 

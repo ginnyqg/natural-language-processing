@@ -21,7 +21,7 @@ Goal of this project is to find characteristics of texts from 3 popular horror a
 
 
 ```{r, message = F, warning = F}
-packages.used <- c("ggplot2", "plotrix", "waffle", "dplyr", "tibble", "tidyr",  "stringr", "tidytext", "topicmodels", "wordcloud", "plotly", "webshot", "htmlwidgets", "reshape2")
+packages.used <- c("ggplot2", "plotrix", "waffle", "dplyr", "tibble", "tidyr",  "stringr", "tidytext", "topicmodels", "wordcloud", "plotly", "webshot", "htmlwidgets", "reshape2", "igraph", "ggraph")
 
 # check packages that need to be installed.
 packages.needed <- setdiff(packages.used, intersect(installed.packages()[,1], packages.used))
@@ -46,6 +46,8 @@ library(plotly)
 library(webshot)
 library(htmlwidgets)
 library(reshape2)
+library(igraph)
+library(ggraph)
 ```
 
 
@@ -235,5 +237,59 @@ p2
 
 #export(p2, file = '/Users/qinqingao/Documents/GitHub/spring2018-project1-ginnyqg/figs/Bubble_num_text_qns_sent.png')
 ```
+
+Exploring bigrams
+
+```{r, message = F, warning = F}
+spooky_bigrams <- spooky %>% 
+unnest_tokens(bigram, text, token = 'ngrams', n = 2)
+
+head(spooky_bigrams, 10)
+
+spooky_bigrams %>% count(bigram, sort = TRUE)
+
+#not too interesting, with all the 'stop words'
+#separate them, and find more interesting bigrams
+bigrams_separated <- spooky_bigrams %>% 
+separate(bigram, c('word1', 'word2'), sep = ' ')
+
+
+#filter out the uninteresting stop words
+bigrams_filtered <- bigrams_separated %>%
+  filter(!word1 %in% stop_words$word) %>%
+  filter(!word2 %in% stop_words$word)
+
+
+#sort by most common bigrams
+bigram_counts <- bigrams_filtered %>%
+  count(word1, word2, sort = TRUE)
+
+
+#unite the 2 words, filter out the stop words, count descendingly
+
+bigrams_united <- bigrams_filtered %>% 
+  unite(bigram, word1, word2, sep = ' ')
+
+bigrams_united_counts <- bigrams_united %>% 
+  count(bigram, sort = TRUE)
+
+head(bigrams_united_counts, 20)
+
+
+bigram_counts
+bigram_graph <- bigram_counts %>% filter(n > 15) %>% graph_from_data_frame()
+bigram_graph
+
+
+set.seed(2018)
+
+ggraph(bigram_graph, layout = "fr") +
+   geom_edge_link() +
+   geom_node_point(color = "lightblue", size = 5) +
+   geom_node_text(aes(label = name), vjust = 1, hjust = 1)
+```
+
+
+
 
 

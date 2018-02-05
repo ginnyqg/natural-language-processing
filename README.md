@@ -41,6 +41,13 @@ EAP writes most texts in the dataset, and he also has largest volume of words. I
 You may interact with the chart [here](https://github.com/GU4243-ADS/spring2018-project1-ginnyqg/blob/master/doc/Spooky_Data_Analysis.html). Might need to download it as `.html` file first: right click `Download` button, click `Save Link As...`, and change the file type to `.html`.
 
 
+## 2.3 How about bigrams in the text? What two words, less stop words appear together most often in the spooky dataset? 
+
+The network digram shows the relationship of these top bigrams.
+
+![image](figs/bigram_graph.png)
+
+
 ## 3.1 How do sentiments compare in these authors' writings?
 
 Pyramid chart displays positive and negative emotional content in different authors' texts.
