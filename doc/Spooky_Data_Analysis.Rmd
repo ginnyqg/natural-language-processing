@@ -172,7 +172,7 @@ p <- plot_ly(dat5, x = ~positive, y = ~negative, size = ~num_qns, color = ~Autho
             ax = 40,
             ay = -60)
 
-p
+#p
 
 #export(p, file = '/Users/qinqingao/Documents/GitHub/spring2018-project1-ginnyqg/figs/Bubble.png')
 ```
@@ -219,7 +219,7 @@ p2 <- plot_ly(dat9, x = ~num_text, y = ~num_qns, size = ~sen_length, color = ~Au
             ay = -60)
 
 
-p2
+#p2
 
 #export(p2, file = '/Users/qinqingao/Documents/GitHub/spring2018-project1-ginnyqg/figs/Bubble_num_text_qns_sent.png')
 ```
