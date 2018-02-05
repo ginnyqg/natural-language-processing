@@ -188,16 +188,12 @@ dat7 <- aggregate(dat6$sen_length, by = list(Author = dat6$author), FUN = sum)
 
 #rename column name
 colnames(dat7)[which(names(dat7) == 'x')] <- 'sen_length'
-dat7
 
 #join tables by author
 dat8 <- inner_join(dat7, dat5, by = 'Author')
-dat8
-
 
 new_num_texts <- melt(num_texts)
 colnames(new_num_texts) <- c('Author', 'num_text')
-new_num_texts
 
 dat9 <- inner_join(new_num_texts, dat8, by = 'Author')
 dat9
