@@ -92,9 +92,18 @@ pie3D(num_texts, labels = lbls, explode = 0.05, labelcex = 0.8)
 
 
 ```{r}
+#count number of questions in texts
 str_count(spooky, '\\?')
+
+#add a field num_qns to spooky
 dat1 <- mutate(spooky, num_qns = str_count(spooky$text, '\\?'))
+
+#aggregate number of questions by authors
 dat2 <- aggregate(dat1$num_qns, by = list(Author = dat1$author), FUN = sum)
+
+#rename column name
+colnames(dat2)[which(names(dat2) == 'x')] <- 'num_qns'
+
 dat2
 
 waffle(c('EAP' = dat2[1, 2], 'HPL' = dat2[2, 2], 'MWS' = dat2[3, 2]), rows = 20, size = 0.5, title = 'Count of Questions in Texts by Authors', xlab = '(1 square == 1 question)')
@@ -103,7 +112,7 @@ waffle(c('EAP' = dat2[1, 2], 'HPL' = dat2[2, 2], 'MWS' = dat2[3, 2]), rows = 20,
 # Sentiment analysis
 ## Positive and negative emotional content comparison in authors' text
 
-Apply sentiment analysis using [bing lexicon](https://www.cs.uic.edu/~liub/FBS/sentiment-analysis.html)
+Apply sentiment analysis using [bing lexicon](https://www.cs.uic.edu/~liub/FBS/sentiment-analysis.html), since the 3 widely-used lexicons stay more concurrent with modern language usage, I am interested in exploring the emotional content of the authors (1800s to early 1900s) in general.
 
 
 ```{r}
@@ -113,10 +122,7 @@ tidy_text <- unnest_tokens(spooky, word, text)
 tidy_text_sentiment <- tidy_text %>% inner_join(get_sentiments('bing'))
 head(tidy_text_sentiment, 10)
 
-
 dat3 <- table(tidy_text_sentiment$sentiment, tidy_text_sentiment$author)
-dat3
-
 
 pyramid.plot(dat3[1,c(1:3)], dat3[2,c(1:3)], top.labels = NULL, show.values = TRUE, ndig = 0, main = 'Author by Sentiments', unit = c('Negative', 'Positive'), ppmar = c(4, 4, 4, 4), laxlab = FALSE, raxlab = FALSE)
 legend('topright', legend = c("EAP", "HPL", "MWS"), col = c("red", "green", "blue"), lty = 1, bty = 'n', lwd = 8, cex = 0.8, horiz=TRUE)
@@ -138,14 +144,10 @@ tidy_text %>%
 * Aggregate number of negative and positive words used by each author
 * Plot a bubble chart to show sentiments and num_qns by authors
 
-```{r}
+```{r, message = F, warning = F}
 dat4 <- as.data.frame.matrix(table(tidy_text_sentiment$author, tidy_text_sentiment$sentiment))
 dat4 <- setNames(cbind(rownames(dat4), dat4, row.names = NULL), c('Author', 'negative', 'positive'))
-dat4
 
-#rename column name
-colnames(dat2)[which(names(dat2) == 'x')] <- 'num_qns'
-dat2
 
 #join tables by author
 dat5 <- inner_join(dat2, dat4, by = 'Author')
@@ -155,6 +157,7 @@ dat5
 # 1    EAP     510     7203     6144
 # 2    HPL     169     7605     3731
 # 3    MWS     419     8150     6799
+
 
 #plot bubble chart: Sentiments and Num of Questions per Author
 p <- plot_ly(dat5, x = ~positive, y = ~negative, size = ~num_qns, color = ~Author, 
@@ -172,14 +175,14 @@ p <- plot_ly(dat5, x = ~positive, y = ~negative, size = ~num_qns, color = ~Autho
             ax = 40,
             ay = -60)
 
-#p
+p
 
 #export(p, file = '/Users/qinqingao/Documents/GitHub/spring2018-project1-ginnyqg/figs/Bubble.png')
 ```
 
 * With the same method, explore relationship between authors' use of questions in sentences and toward their total volume of texts.
 
-```{r}
+```{r, message = F, warning = F}
 #sentence length
 spooky$sen_length <- str_length(spooky$text)
 
@@ -215,14 +218,9 @@ p2 <- plot_ly(dat9, x = ~num_text, y = ~num_qns, size = ~sen_length, color = ~Au
             ay = -60)
 
 
-#p2
+p2
 
 #export(p2, file = '/Users/qinqingao/Documents/GitHub/spring2018-project1-ginnyqg/figs/Bubble_num_text_qns_sent.png')
 ```
-
-
-
-
-
 
 
