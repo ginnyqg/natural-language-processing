@@ -13,11 +13,11 @@ This is the first and only *individual* (as opposed to *team*) this semester.
 
 ## 1. Who write how many texts in the dataset?
 
-Pie chart shows composition of author's texts in the dataset.
+Pie chart shows composition of author's texts in the [spooky](https://github.com/GU4243-ADS/spring2018-project1-ginnyqg/blob/master/data/spooky.csv) dataset.
 
 ![image](figs/Piechart_3Authors.png)
 
-It appears that most texts belong to EAP (40.3%), followed by MWS (30.9%) and HPL (28.8%).
+It appears that most texts belong to EAP (40.3%), followed by MWS (30.9%) and HPL (28.8%). MWS and HPL have about same number of texts in this dataset.
 
 
 ## 2. Do some authors use more questions in the texts than others?
