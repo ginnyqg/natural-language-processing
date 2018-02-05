@@ -1,5 +1,5 @@
 # Spring 2018
-# Project 1: Spooky Data Analysis
+# Project 1: Spooky Data Analysis :ghost:
 
 ## Project Description
 This is the first and only *individual* (as opposed to *team*) this semester. 
@@ -50,7 +50,7 @@ Pyramid chart displays positive and negative emotional content in different auth
 From the pyramid chart, we can see that all 3 authors use words with negative emotions in their texts more than positive ones. After all, they are horror authors! While MWS leads the total number of emotional words in her texts compare to the other 2 authors, her negative to positive words ratio is about the same as EAP's. HPL, on the other hand, uses twice as many negative words than positive words in his writings.
 
 
-<iframe width="900" height="800" frameborder="0" scrolling="no" src="//plot.ly/~ginnyqg/1.embed"></iframe>
+
 
 
 
