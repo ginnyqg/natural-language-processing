@@ -2,9 +2,10 @@
 Author: Ginny Gao
 Date: Feb 03, 2018
 Output:
-  html_document: default
   pdf_document: default
+  html_document: default
 Title: SPOOKY Data Analysis
+output: pdf_document
 ---
 
 # Goal

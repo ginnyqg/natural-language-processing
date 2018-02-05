@@ -20,13 +20,23 @@ Pie chart shows composition of author's texts in the [spooky](https://github.com
 It appears that most texts belong to EAP (40.3%), followed by MWS (30.9%) and HPL (28.8%). MWS and HPL have about same number of texts in this dataset.
 
 
-## 2. Do some authors use more questions in the texts than others?
+## 2.1 Do some authors use more questions in the texts than others?
 
-Waffle chart presents the comparison of use of questions in texts among 3 authors.
+* Waffle chart presents the comparison of use of questions in texts among 3 authors.
+* Questions are identified with "?" mark in the sentences.
 
 ![image](figs/Waffle_qns_in_texts.png)
 
 Not suprisingly, EAP uses most number of questions in his texts, as EAP has more texts than others in the dataset. Notice MWS and HPL have approximately same number of texts in the dataset from study [above](#1-who-write-how-many-texts-in-the-dataset), but MWS uses more than twice as many questions in her texts than HPL does. This can be a key identifier to differentiate MWS and HPL's texts.
+
+
+## 2.2 Are there any differences in authors' use of questions in sentences, compare to their total volume of texts in the dataset?
+
+Bubble chart illustrates the similarities and differences in these quantities for each author.
+
+![image](figs/Bubble_num_text_qns_sent.png)
+
+EAP writes most texts in the dataset, and he also has largest volume of words. Interestingly for MWS, though she doesn't have many texts or nearly as many words as EAP does in the dataset, she uses many questions in her texts. Based on the slopes of where the 3 bubbles are in the chart, MWS uses most questions in her texts compare to the other 2. HPL writes the least in the group, and his use of questions is about the same as EAP.
 
 
 ## 3. How do sentiments compare in these authors' writings?
