@@ -179,6 +179,22 @@ legend('topright', legend = c("EAP", "HPL", "MWS"), col = c("red", "green", "blu
 
 
 
+
+
+#what positive and negative words do the authors use?
+#comparison cloud
+
+tidy_text %>%
+  inner_join(get_sentiments("bing")) %>%
+  count(word, sentiment, sort = TRUE) %>%
+  acast(word ~ sentiment, value.var = "n", fill = 0) %>%
+  comparison.cloud(colors = c("darkgreen", "purple"),
+                   max.words = 100)
+
+
+
+
+
 colnames(dat2)[which(names(dat2) == 'x')] <- 'num_qns'
 dat2
 
@@ -318,6 +334,43 @@ p2 <- plot_ly(dat9, x = ~num_text, y = ~num_qns, size = ~sen_length, color = ~Au
 p2
 
 export(p2, file = '/Users/qinqingao/Documents/GitHub/spring2018-project1-ginnyqg/figs/Bubble_num_text_qns_sent.png')
+
+
+
+
+# bing_sentiment_counts <- tidy_text %>%
+#   inner_join(get_sentiments("bing")) %>%
+#   count(word, sentiment, sort = TRUE) %>%
+#   ungroup()
+
+
+# bing_sentiment_counts
+
+# # A tibble: 3,612 x 3
+#    word    sentiment     n
+#    <chr>   <chr>     <int>
+#  1 like    positive    613
+#  2 great   positive    512
+#  3 well    positive    473
+#  4 death   negative    380
+#  5 love    positive    331
+#  6 strange negative    283
+#  7 good    positive    277
+#  8 fear    negative    240
+#  9 dark    negative    223
+# 10 dead    negative    203
+# # ... with 3,602 more rows
+
+
+
+
+
+
+
+
+
+
+
 
 
 

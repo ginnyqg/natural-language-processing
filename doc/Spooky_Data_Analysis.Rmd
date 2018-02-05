@@ -122,6 +122,18 @@ pyramid.plot(dat3[1,c(1:3)], dat3[2,c(1:3)], top.labels = NULL, show.values = TR
 legend('topright', legend = c("EAP", "HPL", "MWS"), col = c("red", "green", "blue"), lty = 1, bty = 'n', lwd = 8, cex = 0.8, horiz=TRUE)
 ```
 
+What are the top 100 positive and negative words do the authors use?
+
+```{r}
+#comparison cloud
+tidy_text %>%
+  inner_join(get_sentiments("bing")) %>%
+  count(word, sentiment, sort = TRUE) %>%
+  acast(word ~ sentiment, value.var = "n", fill = 0) %>%
+  comparison.cloud(colors = c("darkgreen", "purple"),
+                   max.words = 100)
+```
+
 
 * Aggregate number of negative and positive words used by each author
 * Plot a bubble chart to show sentiments and num_qns by authors
