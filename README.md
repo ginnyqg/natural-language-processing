@@ -60,7 +60,8 @@ Word comparison cloud shows top 100 positive and negative words used by the auth
 
 * From the comparison cloud, it is also represented that authors use more positive than negative words in the top 100 word list. 
 
-* 'like', 'great', 'well', 'good', 'love' lead the top positive words, while 'death', 'strange', 'fear', 'dark' are the top negative words.    
+* 'like', 'great', 'well', 'good', 'love' lead the top positive words, while 'death', 'strange', 'fear', 'dark' are the top negative words. As the size of the words shows, these top positive words appear more often in the authors' texts than the negative words do.
+
 
 
 Then, I wonder...

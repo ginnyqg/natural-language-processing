@@ -4,7 +4,7 @@ Date: Feb 03, 2018
 Output:
   pdf_document: default
   html_document: default
-Title: SPOOKY Data Analysis
+Title: Spooky Data Analysis
 output:
   html_document: default
   pdf_document: default
@@ -15,7 +15,7 @@ output:
 Goal of this project is to find characteristics of texts from 3 popular horror authors, identify similarities and differences in their texts in the [spooky](https://github.com/GU4243-ADS/spring2018-project1-ginnyqg/blob/master/data/spooky.csv) dataset. Data consists of excerpts of texts written by [Edgar Allan Poe (EAP)](https://en.wikipedia.org/wiki/Edgar_Allan_Poe), [HP Lovecraft (HPL)](https://en.wikipedia.org/wiki/H._P._Lovecraft), and [Mary Wollstonecraft Shelley (MWS)](https://en.wikipedia.org/wiki/Mary_Shelley).
 
 
-# Load packages and read the data
+# Load the packages and read the data
 
 ## Setup the libraries if not already installed
 
@@ -66,6 +66,18 @@ head(spooky, 3)
 dim(spooky)
 ```
 
+Quick scan on if any missing value, variable typle
+
+```{r}
+#Check to see any missing value in the dataset
+sum(is.na(spooky))
+
+#change `author` type from `character` to `factor` for analysis
+class(spooky$author)
+spooky$author <- as.factor(spooky$author)
+class(spooky$author)
+```
+
 How many texts do each author have in the dataset?
 
 ```{r}
@@ -78,6 +90,7 @@ Plot composition of number of texts from 3 authors in pie chart, display counts 
 
 ```{r}
 lbls <- paste(names(num_texts), '\n', num_texts, '\n', round(num_texts/sum(num_texts) * 100, 1), '%', sep = '')
+
 pie3D(num_texts, labels = lbls, explode = 0.05, labelcex = 0.8)
 ```
 
@@ -103,7 +116,6 @@ dat2 <- aggregate(dat1$num_qns, by = list(Author = dat1$author), FUN = sum)
 
 #rename column name
 colnames(dat2)[which(names(dat2) == 'x')] <- 'num_qns'
-
 dat2
 
 waffle(c('EAP' = dat2[1, 2], 'HPL' = dat2[2, 2], 'MWS' = dat2[3, 2]), rows = 20, size = 0.5, title = 'Count of Questions in Texts by Authors', xlab = '(1 square == 1 question)')
@@ -125,6 +137,7 @@ head(tidy_text_sentiment, 10)
 dat3 <- table(tidy_text_sentiment$sentiment, tidy_text_sentiment$author)
 
 pyramid.plot(dat3[1,c(1:3)], dat3[2,c(1:3)], top.labels = NULL, show.values = TRUE, ndig = 0, main = 'Author by Sentiments', unit = c('Negative', 'Positive'), ppmar = c(4, 4, 4, 4), laxlab = FALSE, raxlab = FALSE)
+
 legend('topright', legend = c("EAP", "HPL", "MWS"), col = c("red", "green", "blue"), lty = 1, bty = 'n', lwd = 8, cex = 0.8, horiz=TRUE)
 ```
 
