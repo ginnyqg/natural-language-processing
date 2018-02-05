@@ -26,16 +26,19 @@ Waffle chart presents the comparison of use of questions in texts among 3 author
 
 ![image](figs/Waffle_qns_in_texts.png)
 
-Not suprisingly, EAP uses most number of questions in his texts, as EAP has more texts than others in the dataset. Notice MWS and HPL have approximately same number of texts in the dataset from study above (1), but MWS uses more than twice as many questions in her texts than HPL does. This can be a key identifier to differentiate MWS and HPL's texts.
+Not suprisingly, EAP uses most number of questions in his texts, as EAP has more texts than others in the dataset. Notice MWS and HPL have approximately same number of texts in the dataset from study above (#1-who-write-how-many-texts-in-the-dataset), but MWS uses more than twice as many questions in her texts than HPL does. This can be a key identifier to differentiate MWS and HPL's texts.
 
 
-## 3. What sentiments do you feel from these authors' writings?
+## 3. How do sentiments compare in these authors' writings?
 
-Pyramid chart displays positive and negative emotional content comparison in authors' text.
+Pyramid chart displays positive and negative emotional content in different authors' texts.
 
 ![image](figs/Pyramid_sentiment.png)
 
-This sentiment analysis uses [bing lexicon](https://www.cs.uic.edu/~liub/FBS/sentiment-analysis.html).
+[bing lexicon](https://www.cs.uic.edu/~liub/FBS/sentiment-analysis.html) is applied in this sentiment analysis.
+
+From the pyramid chart, we can see that all 3 authors use words with negative emotions in their texts more than positive ones. After all, they are horror authors! While MWS leads the total number of emotional words in her texts compare to the other 2 authors, her negative to positive words ratio is about the same as EAP's. HPL, on the other hand, uses twice as many negative words than positive words in his writings.
+
 
 
 
