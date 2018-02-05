@@ -8,7 +8,7 @@ This is the first and only *individual* (as opposed to *team*) this semester.
 
 + This project is conducted by Ginny Gao, Columbia UNI: qg2158
 
-+ Project summary: This project studies writing styles from 3 popular horror authors (1800s to early 1900s): [Edgar Allan Poe (EAP)](https://en.wikipedia.org/wiki/Edgar_Allan_Poe), [HP Lovecraft (HPL)](https://en.wikipedia.org/wiki/H._P._Lovecraft), and [Mary Wollstonecraft Shelley (MWS)](https://en.wikipedia.org/wiki/Mary_Shelley). It compares and contrasts positive and negative emotions in their writing content via sentiment analysis, and also identifies words frequently appear together in the authors' excerpts through topic modeling.
++ Project summary: This project studies texts from 3 popular horror authors (1800s to early 1900s): [Edgar Allan Poe (EAP)](https://en.wikipedia.org/wiki/Edgar_Allan_Poe), [HP Lovecraft (HPL)](https://en.wikipedia.org/wiki/H._P._Lovecraft), and [Mary Wollstonecraft Shelley (MWS)](https://en.wikipedia.org/wiki/Mary_Shelley). It explores authors' writing styles in amount of words, use of punctuation - specifically question marks, compares and contrasts positive and negative emotions in authors' writing content via sentiment analysis.
 
 
 ## 1. Who write how many texts in the dataset?
@@ -72,11 +72,6 @@ I plotted the bubble chart on these 3 quantities to find out.
 ![image](figs/Bubble.png)
 
 The bubble chart confirms with the pyramid chart that MWS's texts have the most positive and negative words, and HPL has the least amount of words carry sentiments, though HPL is much more likely to choose a negative word than a positive one when he uses words that carry emotional content. MWS and EAP utilize questions in their texts about 2.5 to 3 times as much as HPL does.
-
-
-
-
-
 
 
 
